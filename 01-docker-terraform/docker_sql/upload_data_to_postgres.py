@@ -15,13 +15,11 @@ def main(params):
     port = params.port
     db = params.db
     table_name = params.table_name
-    url = params.url
-    csv_name = "output.csv"
+    #url = params.url
+    csv_name = r"C:\Users\work\Desktop\Data Engineering\01-docker-terraform\docker_sql\yellow_tripdata_2021-01.csv"
 
-    # download the csv  
-    os.system(f"wget {url} -O {csv_name}")
 
-    engine = create_engine(f"postgresql:/{user}:{password}@{host}:{port}/{db}")
+    engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}")
     df_iter = pd.read_csv(csv_name, iterator=True, chunksize=100000)
     
     df = next(df_iter)
@@ -60,7 +58,7 @@ if __name__ == "__main__":
     parser.add_argument("--port",  help="port for postgres")
     parser.add_argument("--db",  help="database name for postgres")
     parser.add_argument("--table_name",  help="table name where we will write the results to")
-    parser.add_argument("--url",  help="url of the csv file")
+    #parser.add_argument("--url",  help="url of the csv file")
     
     args = parser.parse_args()
 
