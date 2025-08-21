@@ -41,7 +41,6 @@ docker run -it \
 
 
 ##Updated python script with argparse to ingest data to postgres
-URL=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz
 
 python upload_data_to_postgres.py \
   --user=root \
@@ -49,5 +48,17 @@ python upload_data_to_postgres.py \
   --host=localhost \
   --port=5432 \
   --db=ny_taxi \
-  --table_name=yellow_taxi_trips \
-  --url=${URL}
+  --table_name=yellow_taxi_trips
+  
+##Dockerizing the python script
+docker build -t taxi_ingest:v001 .
+
+docker run -v "C:/Users/work/Desktop/Data Engineering/01-docker-terraform/docker_sql/yellow_tripdata_2021-01.csv:/yellow_tripdata_2021-01.csv" \
+--network=pg-network \
+taxi_ingest:v001 \
+  --user=root \
+  --password=root \
+  --host=pg-database \
+  --port=5432 \
+  --db=ny_taxi \
+  --table_name=yellow_taxi_trips

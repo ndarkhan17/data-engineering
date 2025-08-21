@@ -16,8 +16,7 @@ def main(params):
     db = params.db
     table_name = params.table_name
     #url = params.url
-    csv_name = r"C:\Users\work\Desktop\Data Engineering\01-docker-terraform\docker_sql\yellow_tripdata_2021-01.csv"
-
+    csv_name =  "/yellow_tripdata_2021-01.csv"
 
     engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}")
     df_iter = pd.read_csv(csv_name, iterator=True, chunksize=100000)
